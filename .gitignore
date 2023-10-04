@@ -1,0 +1,5 @@
+node_modules
+*-lock.*
+docs/.vuepress/.cache
+docs/.vuepress/.temp
+package-*.json

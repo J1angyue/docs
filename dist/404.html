@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.67">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/logo.png"><title>J1angyue Docs</title><meta name="description" content="">
+    <link rel="preload" href="/docs.github.io/assets/style-02dc3512.css" as="style"><link rel="stylesheet" href="/docs.github.io/assets/style-02dc3512.css">
+    <link rel="modulepreload" href="/docs.github.io/assets/app-9e9c32a6.js"><link rel="modulepreload" href="/docs.github.io/assets/404.html-f9875e7b.js"><link rel="modulepreload" href="/docs.github.io/assets/404.html-e2c999f1.js"><link rel="prefetch" href="/docs.github.io/assets/index.html-05f27b3d.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-f392cf19.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-d7bf1040.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-50ac9b84.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-03a71693.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-61689147.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-c8c4fe48.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-2cb3413e.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-2612aa5b.js" as="script"><link rel="prefetch" href="/docs.github.io/assets/index.html-5497f4e2.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="theme-container"><main class="page"><div class="theme-default-content"><h1>404</h1><blockquote>How did we get here?</blockquote><a href="/docs.github.io/" class="">Take me home</a></div></main></div><!----><!--]--></div>
+    <script type="module" src="/docs.github.io/assets/app-9e9c32a6.js" defer></script>
+  </body>
+</html>
