@@ -27,7 +27,7 @@
 
 2. 修改 nginx 配置文件
 
-   ```xx.conf
+   ```nginx
    location /pdfviewer {
        alias  html/pdfjs-2.5.207-es5-dist;
    }

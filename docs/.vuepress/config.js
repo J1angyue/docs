@@ -5,7 +5,7 @@ const BASE = '/docs/'
 
 export default defineUserConfig({
   lang: 'zh-CN',
-  title: 'J1angyue Docs',
+  title: '江月的文档',
   base: BASE,
   head: [
     ['link', { rel: 'icon', href: BASE + 'logo.png' }]

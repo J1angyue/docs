@@ -2,6 +2,7 @@ import { defaultTheme } from "vuepress"
 
 export default defaultTheme({
   logo: '/logo.png',
+  contributors: false,
   navbar: [
     { text: "首页", link: "/" },
   ],

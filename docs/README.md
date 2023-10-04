@@ -1,20 +1,25 @@
 ---
 home: true
+
+tagline: null
+
 actions:
   - text: PDF Viewer
     link: /pdf-viewer/
-    type: primary
+    type: secondry
   - text: Online Docs
     link: /online-docs/
-    type: primary
+    type: secondry
   - text: Jenkins
     link: /jenkins/
-    type: primary
+    type: secondry
   - text: Sentry
     link: /sentry/
-    type: primary
+    type: secondry
+
 features:
   - title: 文章内容
     details: 个人随笔、综管项目开发记录等
+
 footer: 综管项目开发记录留存
 ---
