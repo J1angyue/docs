@@ -4,10 +4,9 @@ import themeConfig from './themeConfig'
 export default defineUserConfig({
   lang: 'zh-CN',
   title: 'J1angyue Docs',
-  base: '/docs.github.io/',
-  dest: 'dist',
+  base: '/docs/',
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }]
   ],
-  themeConfig,
+  theme: themeConfig,
 })
