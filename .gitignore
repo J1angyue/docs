@@ -1,5 +1,0 @@
-node_modules
-*-lock.*
-docs/.vuepress/.cache
-docs/.vuepress/.temp
-docs/.vuepress/dist
