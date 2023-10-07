@@ -2,40 +2,51 @@
 
 ## 提升镜像拉取速度（可选）
 
-准备镜像配置
-
-```json
-{
-  "registry-mirrors": [
-    "https://hub-mirror.c.163.com",
-    "https://mirror.baidubce.com"
-  ]
-}
-```
-
-执行命令
-
-```sh
-mkdir /etc/docker
-vi /etc/docker/daemon.json
-# 将镜像 json 粘贴到 daemon.json 文件中，保存并退出后执行下面的命令
-systemctl daemon-reload
-systemctl restart docker
-```
-
-检查配置是否生效（可选）
+检查是否有加速配置，运行命令：
 
 ```sh
 docker info
 ```
 
-若返回的信息含有以下文字则说明设置已经生效：
+1. 若返回类似以下文字则说明有镜像加速配置，但镜像源可能是未生效：
 
-```sh
- Registry Mirrors:
-  https://hub-mirror.c.163.com/
-  https://mirror.baidubce.com/
-```
+   ```sh
+   Registry Mirrors:
+     https://hub-mirror.c.163.com/
+     https://mirror.baidubce.com/
+   ```
+
+   执行命令，使源配置生效：
+
+   ```sh
+   systemctl daemon-reload
+   systemctl restart docker
+   ```
+
+2. 若没有返回上述文字，则需要配置镜像源：
+
+   准备镜像配置
+
+   ```json
+   {
+     "registry-mirrors": [
+       "https://hub-mirror.c.163.com",
+       "https://mirror.baidubce.com"
+     ]
+   }
+   ```
+
+   执行命令
+
+   ```sh
+   mkdir /etc/docker
+   vi /etc/docker/daemon.json
+   # 将镜像 json 粘贴到 daemon.json 文件中，保存并退出后执行下面的命令
+   systemctl daemon-reload
+   systemctl restart docker
+   ```
+
+   镜像加速配置完成，加速生效。
 
 ## 使用 docker 安装 Jenkins
 
@@ -116,15 +127,97 @@ Jenkins 的搭建已经完成，后文是通过 Jenkins 实现 CD：
 
 ## CD
 
-CD 的主要过程：
+CD 的主要过程如下：
 
-![创建第一个管理员用户](./assets/CD主要过程.png)
+![CD主要过程](./assets/CD主要过程.png)
+
+### 安装 && 配置插件
+
+依次打开插件安装界面：`Dashboard - 系统管理 - 插件管理 - Available plugins`
+
+在搜索输入框内输入插件完整的名称、选中后点击`安装`按钮
+
+![安装插件](./assets/2023-10-06_114140.jpg)
+
+1.  `pull`：拉取代码
+
+    1. 安装插件：`Git`（通常作为默认插件在安装 Jenkins 时已自动安装）
+    2. 插件安装完成过后依次打开 `Dashboard - 系统管理 - 系统配置`，找到`Git plugin`，填写本地 git 账户的昵称与邮箱、点击保存
+       ![配置本地Git](./assets/2023-10-06_115207.jpg)
+
+    3. 配置 gitlab 凭据
+
+       依次打开 `Dashboard - 系统管理 - 凭据管理 - 添加凭据`，找到`Git plugin`
+       ![凭据管理](./assets/2023-10-07_092947.jpg)
+
+       选择`Username with password`，填入登录 gitlab 时使用的账号密码以及其他附属信息，最后点击`Create`
+       ![创建凭据](./assets/2023-10-07_143341.jpg)
+
+2.  `build`：执行构建命令，需要 `nodejs` 环境
+
+    1. 安装插件：`NodeJS`
+    2. 插件安装完成过后依次打开`Dashboard - 系统管理 - 全局工具配置`，找到`NodeJS 安装`，点击`新增 NodeJS`
+    3. 选择 node 版本，并点击`保存`
+       ![选择node版本](./assets/2023-10-06_120251.jpg)
+    4. 更换`npm Taobao`源
+
+       1. 依次点开`Dashboard - 系统管理 - Managed files - Add a new Config`
+
+       2. 选择`Npm config file`，最后点击`Next`
+          ![创建Npm-config-file](./assets/2023-10-07_161634.jpg)
+
+       3. 在新表单中填入名称等必要项后点击`新增`
+          ![创建Npm-config-file](./assets/2023-10-07_162255.jpg)
+
+       4. 填入淘宝源：`https://registry.npm.taobao.org`后点击`Submit`
+          ![创建Npm-config-file](./assets/2023-10-07_165040.jpg)
+
+       ::: tip 提示
+       也可以不配置更换 npm 源，构建时增加一行命令指定 npm 源也可以：
+
+       ```sh
+       npm i --registry https://registry.npm.taobao.org
+       ```
+
+       :::
+
+3.  `deploy`：部署，需要连接别的服务器`传输文件`并执行`部署脚本`
+
+    1.  安装插件：`Publish over SSH`
+    2.  插件安装完成过后依次打开 `Dashboard - 系统管理 - 系统配置`，找到`Publish over SSH`，点击`新增`
+
+        填入服务器 IP、账号密码、根路径以及其他必要信息后点击保存
+        ![创建构建任务](./assets/2023-10-07_175559.jpg)
+
+        ::: tip 提示
+        构建时调用插件传输文件的路径均是相对于该处填写的`Remote Directory`，因此填写成`根路径 /`比较方便
+        :::
+
+### 创建构建任务
+
+点击左侧“新建任务”，再分别输入项目名、选择项目类型，最后点击确定
+
+![创建构建任务](./assets/2023-10-07_080444.jpg)
+
+1.  配置源码管理
+
+    选择 `Git`，填入代码`仓库地址`，选择登录 gitlab 的`凭据`，填写`分支`后点击确定
+
+    ![配置源码管理](./assets/2023-10-07_145312.jpg)
+
+    ::: tip 提示
+    该步配置完后最好先执行构建一次，看看能否正常拉取代码，能正常拉取再继续后面的配置
+    :::
+
+2.  配置构建环境
+
+    勾选`Provide Node & npm bin/ folder to PATH`
+    ![配置源码管理](./assets/2023-10-07_182151.jpg)
 
 ## ZDB 相关配置
 
 账密：`zgadmin/pwd@jenkins`
 
-Dashboard - Manage Jenkins - Available plugins
 Publish Over SSH
 GitLab
 
