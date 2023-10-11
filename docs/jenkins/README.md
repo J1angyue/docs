@@ -139,98 +139,151 @@ CD 的主要过程如下：
 
 ![安装插件](./assets/2023-10-06_114140.jpg)
 
-1.  `pull`：拉取代码
+1. `pull`：拉取代码
 
-    1. 安装插件：`Git`（通常作为默认插件在安装 Jenkins 时已自动安装）
-    2. 插件安装完成过后依次打开 `Dashboard - 系统管理 - 系统配置`，找到`Git plugin`，填写本地 git 账户的昵称与邮箱、点击保存
-       ![配置本地Git](./assets/2023-10-06_115207.jpg)
+   1. 安装插件：`Git`（通常作为默认插件在安装 Jenkins 时已自动安装）
+   2. 插件安装完成过后依次打开 `Dashboard - 系统管理 - 系统配置`，找到`Git plugin`，填写本地 git 账户的昵称与邮箱、点击保存
+      ![配置本地Git](./assets/2023-10-06_115207.jpg)
 
-    3. 配置 gitlab 凭据
+   3. 配置 gitlab 凭据
 
-       依次打开 `Dashboard - 系统管理 - 凭据管理 - 添加凭据`，找到`Git plugin`
-       ![凭据管理](./assets/2023-10-07_092947.jpg)
+      依次打开 `Dashboard - 系统管理 - 凭据管理 - 添加凭据`
+      ![凭据管理](./assets/2023-10-07_092947.jpg)
 
-       选择`Username with password`，填入登录 gitlab 时使用的账号密码以及其他附属信息，最后点击`Create`
-       ![创建凭据](./assets/2023-10-07_143341.jpg)
+      选择`Username with password`，填入登录 gitlab 时使用的账号密码以及其他附属信息，最后点击`Create`
+      ![创建凭据](./assets/2023-10-07_143341.jpg)
 
-2.  `build`：执行构建命令，需要 `nodejs` 环境
+2. `build`：执行构建命令，需要 `nodejs` 环境
 
-    1. 安装插件：`NodeJS`
-    2. 插件安装完成过后依次打开`Dashboard - 系统管理 - 全局工具配置`，找到`NodeJS 安装`，点击`新增 NodeJS`
-    3. 选择 node 版本，并点击`保存`
-       ![选择node版本](./assets/2023-10-06_120251.jpg)
-    4. 更换`npm Taobao`源
+   1. 安装插件：`NodeJS`
+   2. 插件安装完成过后依次打开`Dashboard - 系统管理 - 全局工具配置`，找到`NodeJS 安装`，点击`新增 NodeJS`
+   3. 选择 node 版本，并点击`保存`
+      ![选择node版本](./assets/2023-10-06_120251.jpg)
+   4. 更换`npm Taobao`源
 
-       1. 依次点开`Dashboard - 系统管理 - Managed files - Add a new Config`
+      1. 依次点开`Dashboard - 系统管理 - Managed files - Add a new Config`
 
-       2. 选择`Npm config file`，最后点击`Next`
-          ![创建Npm-config-file](./assets/2023-10-07_161634.jpg)
+      2. 选择`Npm config file`，最后点击`Next`
+         ![创建Npm-config-file](./assets/2023-10-07_161634.jpg)
 
-       3. 在新表单中填入名称等必要项后点击`新增`
-          ![创建Npm-config-file](./assets/2023-10-07_162255.jpg)
+      3. 在新表单中填入名称等必要项后点击`新增`
+         ![创建Npm-config-file](./assets/2023-10-07_162255.jpg)
 
-       4. 填入淘宝源：`https://registry.npm.taobao.org`后点击`Submit`
-          ![创建Npm-config-file](./assets/2023-10-07_165040.jpg)
+      4. 填入淘宝源：`https://registry.npm.taobao.org`后点击`Submit`
+         ![创建Npm-config-file](./assets/2023-10-07_165040.jpg)
 
-       ::: tip 提示
-       也可以不配置更换 npm 源，构建时增加一行命令指定 npm 源也可以：
+      ::: tip 提示
+      也可以不配置更换 npm 源，构建时指定 npm 源也可以：
 
-       ```sh
-       npm i --registry https://registry.npm.taobao.org
-       ```
+      ```sh
+      npm i --registry https://registry.npm.taobao.org
+      ```
 
-       :::
+      :::
 
-3.  `deploy`：部署，需要连接别的服务器`传输文件`并执行`部署脚本`
+3. `deploy`：部署，需要连接别的服务器`传输文件`并执行`部署脚本`
 
-    1.  安装插件：`Publish over SSH`
-    2.  插件安装完成过后依次打开 `Dashboard - 系统管理 - 系统配置`，找到`Publish over SSH`，点击`新增`
+   1. 安装插件：`Publish over SSH`
+   2. 插件安装完成过后依次打开 `Dashboard - 系统管理 - 系统配置`，找到`Publish over SSH`，点击`新增`
 
-        填入服务器 IP、账号密码、根路径以及其他必要信息后点击保存
-        ![创建构建任务](./assets/2023-10-07_175559.jpg)
+      填入服务器 IP、账号密码、根路径以及其他必要信息后点击保存
+      ![创建构建任务](./assets/2023-10-07_175559.jpg)
 
-        ::: tip 提示
-        构建时调用插件传输文件的路径均是相对于该处填写的`Remote Directory`，因此填写成`根路径 /`比较方便
-        :::
+      ::: tip 提示
+      构建时调用插件传输文件的路径均是相对于该处填写的`Remote Directory`，因此填写成根路径`/`比较方便
+      :::
 
-### 创建构建任务
+### 创建 node && npm 构建任务
 
 点击左侧“新建任务”，再分别输入项目名、选择项目类型，最后点击确定
 
 ![创建构建任务](./assets/2023-10-07_080444.jpg)
 
-1.  配置源码管理
+1. 配置源码管理
 
-    选择 `Git`，填入代码`仓库地址`，选择登录 gitlab 的`凭据`，填写`分支`后点击确定
+   选择 `Git`，填入代码`仓库地址`，选择登录 gitlab 的`凭据`，填写`分支`后点击确定
+   ![配置源码管理](./assets/2023-10-07_145312.jpg)
 
-    ![配置源码管理](./assets/2023-10-07_145312.jpg)
+   ::: tip 提示
+   该步配置完后最好先执行构建一次，看看能否正常拉取代码，能正常拉取再继续后面的配置
+   :::
 
-    ::: tip 提示
-    该步配置完后最好先执行构建一次，看看能否正常拉取代码，能正常拉取再继续后面的配置
-    :::
+2. 配置构建环境
 
-2.  配置构建环境
+   勾选`Provide Node & npm bin/ folder to PATH`，选择要使用的 node 版本、选择 npmrc file，点击保存
+   ![配置源码管理](./assets/2023-10-07_182151.jpg)
 
-    勾选`Provide Node & npm bin/ folder to PATH`
-    ![配置源码管理](./assets/2023-10-07_182151.jpg)
+3. 配置构建步骤
 
-## ZDB 相关配置
+   不同于 CD 主要过程，详细的 CD 过程应当如下：
+   ![详细的CD过程](./assets/CD详细过程.png)
 
-账密：`zgadmin/pwd@jenkins`
+   1. 配置步骤：install && build
 
-Publish Over SSH
-GitLab
+      在构建任务配置中找到`Build Steps`，下拉选择`执行 shell`
+      ![选择执行shell](./assets/2023-10-08_082325.jpg)
 
-Dashboard - Manage Jenkins - System
-Git plugin
+      在`命令`输入框中输入构建命令，以前端构建为例，先安装再构建:
 
-Publish over SSH - 新增
+      ```sh
+      # 对应步骤：install，安装 node_modules 时会自动使用前面配置的 taobao 源
+      npm i
+      # 对应步骤：build
+      npm run build
+      # 压缩构建产物，便于构建后的文件传输；非必需步骤
+      tar -czf dist.tar.gz dist
+      ```
 
-Name zdb-prod-37
-Hostname 37
-Username root
-Remote Directory /
+      ::: tip 提示
+      构建后操作也可以传输整个目录，但同体积下传输单个压缩包文件比传输多个极小的文件效率高
+      :::
 
-√ Use password authentication, or use a different key
+   2. 配置步骤：send && backup && deploy
 
-NodeJS
+      在`Build Steps`中下拉选择`Send files or execute commands over SSH`
+      ![send-backup-deploy](./assets/2023-10-11_110504.jpg)
+
+      ```sh
+      # 切换到部署路径下
+      cd /usr/local/nginx/html
+      # 先备份再部署
+      # 备份前应当先删除上次的备份，也可以备份上次的备份
+      rm -rf dist-bak
+      # 重命名文件夹即是备份
+      mv dist dist-bak
+      # 解压后得到的文件夹即是要部署的内容
+      tar -xzf dist.tar.gz
+      ```
+
+   3. 配置步骤：clean
+
+      用于构建的目录和用于部署的目录都会产生无用的内容，因此这两个地方都需要进行清除操作
+
+      1. 清除服务器部署目录下无用的内容
+
+         ![send-backup-deploy](./assets/2023-10-11_110504.jpg)
+
+         尾行增加脚本：
+
+         ```sh
+         # 部署后删除传输过来的内容
+         rm -f dist.tar.gz
+         ```
+
+      2. 清除工作空间构建后无用的内容
+
+         在构建任务配置中找到`Build Steps`，下拉选择`执行 shell`
+
+         使用以下命令：
+
+         ```sh
+         rm -f dist.tar.gz
+         ```
+
+         ![send-backup-deploy](./assets/2023-10-11_114200.jpg)
+
+   ::: tip 记得点击“保存”
+   :::
+
+   完整的配置如图：
+   ![send-backup-deploy](./assets/2023-10-11_114406.jpg)

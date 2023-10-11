@@ -79,20 +79,9 @@ cd setnry
 
 该步：`▶ Fetching and updating Docker images ...`会卡住较长时间，解决方法：
 
-1.  等待几十分钟后若仍然不动直接按下`Ctrl + C`结束进程即可，结束后再次执行`./install.sh`，多等待几次，多结束几次，安装就能进行到下一步；或者参考 2\3
+1.  等待 20~30 十分钟后若仍然不动直接按下`Ctrl + C`结束进程即可，结束后再次执行`./install.sh`，多等待几次，多结束几次，安装就能进行到下一步；或者参考 2\3
 
-2.  设置 docker 国内镜像源
-
-    ```sh
-    sudo mkdir -p /etc/docker
-    sudo tee /etc/docker/daemon.json <<-'EOF'
-    {
-       "registry-mirrors": ["https://rsm2lnlp.mirror.aliyuncs.com"]
-    }
-    EOF
-    sudo systemctl daemon-reload
-    sudo systemctl restart docker
-    ```
+2.  [提升镜像拉取速度](/jenkins/README.md#提升镜像拉取速度（可选）)
 
 3.  加速 github (`23.8.0: Pulling from getsentry/sentry`)、魔法上网
 
