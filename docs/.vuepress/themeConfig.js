@@ -22,6 +22,10 @@ export default defaultTheme({
     {
       text: '使用说明文档',
       link: '/online-docs/'
+    },
+    {
+      text: 'Vite && Vue',
+      link: '/vite-vue/'
     }
   ]
 })

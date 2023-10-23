@@ -16,6 +16,9 @@ actions:
   - text: Sentry
     link: /sentry/
     type: secondry
+  - text: Vite && Vue
+    link: /vite-vue/
+    type: secondry
 
 features:
   - title: 文章内容
