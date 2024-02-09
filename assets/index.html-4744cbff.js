@@ -1,4 +1,4 @@
-import{_ as a,o as n,c as s,a as e}from"./app-af3be413.js";const l={},t=e(`<div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token function">docker</span> run <span class="token punctuation">\\</span>
+import{_ as a,o as n,c as s,a as e}from"./app-5ae25ba9.js";const l={},t=e(`<div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token function">docker</span> run <span class="token punctuation">\\</span>
  <span class="token parameter variable">-d</span> <span class="token punctuation">\\</span>
  <span class="token parameter variable">-u</span> root <span class="token punctuation">\\</span>
  <span class="token parameter variable">--publish</span> <span class="token number">9090</span>:80 <span class="token punctuation">\\</span>
