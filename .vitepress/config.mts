@@ -9,7 +9,7 @@ export default defineConfig({
   srcDir: "docs",
   base: BASE,
   head: [
-    ["link", { rel: "icon", type: "image/png", href: "logo.png" }]
+    ["link", { rel: "icon", type: "image/png", href: "logo.png" }],
     [
       'script',
       {},
