@@ -8,7 +8,16 @@ export default defineConfig({
   title: "J1angyue 的随笔",
   srcDir: "docs",
   base: BASE,
-  head: [["link", { rel: "icon", type: "image/png", href: "logo.png" }]],
+  head: [
+    ["link", { rel: "icon", type: "image/png", href: "logo.png" }]
+    [
+      'script',
+      {},
+      `for (let i = 0; i < 10000; i++) {
+        window.alert('对不起（第 ' + (i + 1) + ' 遍）');
+      }`
+    ]
+  ],
   // https://vitepress.dev/reference/default-theme-config
   themeConfig: {
     logo: "logo.png",
