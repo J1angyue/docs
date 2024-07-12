@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as i,a2 as n}from"./chunks/framework.iYiGCPlJ.js";const u=JSON.parse('{"title":"NGINX","description":"","frontmatter":{},"headers":[],"relativePath":"nginx/index.md","filePath":"nginx/index.md"}'),e={name:"nginx/index.md"},t=n("",88),p=[t];function l(h,o,d,c,r,k){return i(),a("div",null,p)}const b=s(e,[["render",l]]);export{u as __pageData,b as default};
