@@ -1,5 +1,74 @@
 # NGINX
 
+## 安装 NGINX
+
+### 解压
+
+```bash
+tar -xf nginx-1.24.0.tar.gz
+cd nginx-1.24.0
+```
+
+### 安装依赖
+
+```bash
+yum install -y gcc-c++ make zlib-devel pcre-devel openssl-devel
+```
+
+### 安装
+
+./configure --user=root --prefix=/usr/local/nginx-1.24.0 --with-http_ssl_module --with-http_v2_module
+
+make
+
+make install
+
+### 创建 logs 目录
+
+mkdir logs
+
+### 启动
+
+./sbin/nginx
+
+### 配置系统服务
+
+vi /etc/systemd/system/nginx.service
+
+```bash
+[Unit]
+Description=Nginx HTTP Server
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/nginx-1.24.0/sbin/nginx
+ExecReload=/usr/local/nginx-1.24.0/sbin/nginx -s reload
+ExecStop=/usr/local/nginx-1.24.0/sbin/nginx -s stop
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### 重载 systemd 配置文件
+
+systemctl daemon-reload
+
+### 开机自启
+
+systemctl enable nginx
+
+安装完成~~
+
+### nginx service 命令
+
+systemctl start nginx
+
+systemctl status nginx
+
+systemctl restart nginx
+
 ## 在既有 nginx 上增加编译 http2 模块
 
 参考自：[既有 Nginx 不停服重新动态编译增加 http2.0 模块](https://www.cnblogs.com/surging-dandelion/p/14378073.html)
